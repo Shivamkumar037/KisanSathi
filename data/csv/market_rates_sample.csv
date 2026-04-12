@@ -1,0 +1,27 @@
+commodity,commodity_hindi,commodity_emoji,mandi_name,state,district,min_price,max_price,avg_price,unit,date
+Onion,प्याज,🧅,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,1400,1850,1625,quintal,2024-04-24
+Potato,आलू,🥔,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,1300,1700,1500,quintal,2024-04-24
+Tomato,टमाटर,🍅,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,1800,2400,2100,quintal,2024-04-24
+Wheat,गेहूं,🌾,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,2000,2300,2150,quintal,2024-04-24
+Rice,चावल,🍚,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,3100,3500,3300,quintal,2024-04-24
+Sugar,चीनी,🍬,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,3700,3800,3750,quintal,2024-04-24
+Maize,मक्का,🌽,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,1300,1550,1425,quintal,2024-04-24
+Mustard,सरसों,🌻,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,5200,5600,5400,quintal,2024-04-24
+Chili,मिर्च,🌶️,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,4500,6000,5250,quintal,2024-04-24
+Garlic,लहसुन,🧄,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,8000,12000,10000,quintal,2024-04-24
+Soybean,सोयाबीन,🫘,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,4000,4500,4250,quintal,2024-04-24
+Sugarcane,गन्ना,🎋,Gorakhpur Mandi,Uttar Pradesh,Gorakhpur,350,380,365,quintal,2024-04-24
+Onion,प्याज,🧅,Lucknow Mandi,Uttar Pradesh,Lucknow,1350,1800,1575,quintal,2024-04-24
+Potato,आलू,🥔,Lucknow Mandi,Uttar Pradesh,Lucknow,1250,1650,1450,quintal,2024-04-24
+Tomato,टमाटर,🍅,Lucknow Mandi,Uttar Pradesh,Lucknow,1900,2500,2200,quintal,2024-04-24
+Wheat,गेहूं,🌾,Lucknow Mandi,Uttar Pradesh,Lucknow,2050,2350,2200,quintal,2024-04-24
+Rice,चावल,🍚,Lucknow Mandi,Uttar Pradesh,Lucknow,3200,3600,3400,quintal,2024-04-24
+Maize,मक्का,🌽,Lucknow Mandi,Uttar Pradesh,Lucknow,1350,1600,1475,quintal,2024-04-24
+Mustard,सरसों,🌻,Lucknow Mandi,Uttar Pradesh,Lucknow,5250,5650,5450,quintal,2024-04-24
+Chili,मिर्च,🌶️,Lucknow Mandi,Uttar Pradesh,Lucknow,4600,6100,5350,quintal,2024-04-24
+Onion,प्याज,🧅,Varanasi Mandi,Uttar Pradesh,Varanasi,1380,1820,1600,quintal,2024-04-24
+Potato,आलू,🥔,Varanasi Mandi,Uttar Pradesh,Varanasi,1280,1680,1480,quintal,2024-04-24
+Tomato,टमाटर,🍅,Varanasi Mandi,Uttar Pradesh,Varanasi,1750,2350,2050,quintal,2024-04-24
+Wheat,गेहूं,🌾,Varanasi Mandi,Uttar Pradesh,Varanasi,1980,2280,2130,quintal,2024-04-24
+Rice,चावल,🍚,Varanasi Mandi,Uttar Pradesh,Varanasi,3050,3450,3250,quintal,2024-04-24
+Mustard,सरसों,🌻,Varanasi Mandi,Uttar Pradesh,Varanasi,5180,5580,5380,quintal,2024-04-24

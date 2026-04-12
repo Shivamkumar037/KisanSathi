@@ -1,0 +1,46 @@
+krishivani/
+├── run.py
+├── manage.py
+├── requirements.txt
+├── .env.example
+├── README.md
+├── FILE_STRUCTURE.txt
+│
+├── app/
+│   ├── __init__.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── user.py
+│   │   ├── crop.py
+│   │   ├── market.py
+│   │   ├── scheme.py
+│   │   ├── community.py
+│   │   └── chat.py
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   ├── auth.py
+│   │   ├── crops.py
+│   │   ├── market.py
+│   │   ├── schemes.py
+│   │   ├── community.py
+│   │   ├── chat.py
+│   │   └── weather.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── ai_service.py
+│   │   ├── market_service.py
+│   │   └── scheme_service.py
+│   └── utils/
+│       ├── __init__.py
+│       ├── file_handler.py
+│       └── validators.py
+│
+├── data/
+│   └── csv/
+│       └── market_rates_sample.csv
+│
+└── uploads/                  (auto-created at runtime)
+    ├── crops/
+    ├── profiles/
+    ├── community/
+    └── audio/
