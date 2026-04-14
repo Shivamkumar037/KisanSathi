@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: KisanSathi
+    runtime: python
+    pythonVersion: "3.10.16"
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:create_app() --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: PLANTNET_API_KEY
+        sync: false
+      - key: OPENWEATHERMAP_API_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
