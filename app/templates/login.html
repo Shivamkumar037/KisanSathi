@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiVani - Login / Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-[428px] w-full mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div class="bg-green-600 text-white text-center py-8">
+            <h1 class="text-4xl font-bold">KrishiVani</h1>
+            <p class="text-green-100 mt-2">Kisan ka apna AI dost 🌾</p>
+        </div>
+
+        <div class="flex border-b">
+            <button onclick="showLogin()" id="loginTab" class="flex-1 py-4 text-lg font-medium border-b-2 border-green-600 text-green-600">Login</button>
+            <button onclick="showSignup()" id="signupTab" class="flex-1 py-4 text-lg font-medium text-gray-500">Sign Up</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="loginForm">
+            <div class="p-8">
+                <input id="loginPhone" type="tel" placeholder="Phone Number" class="w-full border border-gray-300 rounded-2xl px-5 py-4 mb-4 text-lg">
+                <input id="loginPassword" type="password" placeholder="Password" class="w-full border border-gray-300 rounded-2xl px-5 py-4 mb-6 text-lg">
+                <button onclick="loginUser()" class="w-full bg-green-600 text-white py-4 rounded-2xl text-xl font-medium">Login</button>
+            </div>
+        </div>
+
+        <!-- SIGNUP FORM -->
+        <div id="signupForm" class="hidden">
+            <div class="p-8">
+                <input id="signupName" type="text" placeholder="Full Name" class="w-full border border-gray-300 rounded-2xl px-5 py-4 mb-4 text-lg">
+                <input id="signupPhone" type="tel" placeholder="Phone Number" class="w-full border border-gray-300 rounded-2xl px-5 py-4 mb-4 text-lg">
+                <input id="signupDistrict" type="text" placeholder="District (e.g. Gorakhpur)" class="w-full border border-gray-300 rounded-2xl px-5 py-4 mb-4 text-lg">
+                <input id="signupPassword" type="password" placeholder="Password" class="w-full border border-gray-300 rounded-2xl px-5 py-4 mb-6 text-lg">
+                <button onclick="signupUser()" class="w-full bg-green-600 text-white py-4 rounded-2xl text-xl font-medium">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function showLogin() {
+        document.getElementById('loginForm').classList.remove('hidden');
+        document.getElementById('signupForm').classList.add('hidden');
+        document.getElementById('loginTab').classList.add('border-b-2', 'border-green-600', 'text-green-600');
+        document.getElementById('signupTab').classList.remove('border-b-2', 'border-green-600', 'text-green-600');
+    }
+
+    function showSignup() {
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('signupForm').classList.remove('hidden');
+        document.getElementById('signupTab').classList.add('border-b-2', 'border-green-600', 'text-green-600');
+        document.getElementById('loginTab').classList.remove('border-b-2', 'border-green-600', 'text-green-600');
+    }
+
+    async function loginUser() {
+        const phone = document.getElementById('loginPhone').value;
+        const password = document.getElementById('loginPassword').value;
+
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({phone, password})
+        });
+        const data = await res.json();
+
+        if (data.token) {
+            localStorage.setItem('token', data.token);
+            window.location.href = data.redirect;   // ← Yeh line fix hai (backend se redirect aayega)
+        } else {
+            alert(data.error || 'Login failed');
+        }
+    }
+
+    async function signupUser() {
+        const name = document.getElementById('signupName').value;
+        const phone = document.getElementById('signupPhone').value;
+        const district = document.getElementById('signupDistrict').value;
+        const password = document.getElementById('signupPassword').value;
+
+        const res = await fetch('/api/auth/signup', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name, phone, district, password})
+        });
+        const data = await res.json();
+
+        if (data.token) {
+            localStorage.setItem('token', data.token);
+            window.location.href = data.redirect;   // ← Normal user ko /home pe bhejega
+        } else {
+            alert(data.error || 'Signup failed');
+        }
+    }
+
+    window.onload = showLogin;
+    </script>
+</body>
+</html>

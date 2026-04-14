@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-4">
+    <h2 class="text-2xl font-bold mb-6">Community 🌾</h2>
+
+    <!-- New Post Form -->
+    <div class="bg-white rounded-3xl shadow p-6 mb-8">
+        <input id="postTitle" type="text" placeholder="Post Title" class="w-full border border-gray-300 rounded-2xl px-5 py-3 mb-4">
+        <textarea id="postProblem" placeholder="Kya problem hai aapke crop mein?" rows="3" class="w-full border border-gray-300 rounded-2xl px-5 py-3 mb-4"></textarea>
+        <input type="file" id="postImage" accept="image/*" class="hidden">
+        <button onclick="document.getElementById('postImage').click()" class="bg-green-100 text-green-700 px-6 py-2 rounded-2xl mb-4">📸 Photo Add Karo</button>
+        <button onclick="createPost()" class="w-full bg-green-600 text-white py-4 rounded-3xl font-medium">Post Karo</button>
+    </div>
+
+    <!-- Posts List -->
+    <div id="postsContainer" class="space-y-6"></div>
+</div>
+
+<script>
+let currentUserId = null;
+
+// Load all posts
+async function loadPosts() {
+    const res = await fetch('/api/community/posts');
+    const data = await res.json();
+    const container = document.getElementById('postsContainer');
+    container.innerHTML = '';
+
+    data.posts.forEach(post => {
+        let html = `
+        <div class="bg-white rounded-3xl shadow p-5">
+            <div class="flex justify-between items-center mb-3">
+                <p class="font-semibold">${post.author}</p>
+                <p class="text-xs text-gray-500">${post.time}</p>
+            </div>
+            <h4 class="font-medium text-lg">${post.title}</h4>
+            <p class="text-gray-700 mt-2">${post.problem}</p>
+            ${post.cloudinary_url ? `<img src="${post.cloudinary_url}" class="mt-4 rounded-2xl w-full">` : ''}
+            
+            <div class="flex items-center gap-6 mt-4 text-sm">
+                <button onclick="toggleLike(${post.id})" class="flex items-center gap-1 text-red-500">
+                    ❤️ <span id="likeCount_${post.id}">${post.likes}</span>
+                </button>
+                <button onclick="showCommentBox(${post.id})" class="flex items-center gap-1">
+                    💬 Comment
+                </button>
+            </div>
+
+            <!-- Comments -->
+            <div id="comments_${post.id}" class="mt-4 space-y-2"></div>
+
+            <!-- Add Comment -->
+            <div id="commentBox_${post.id}" class="hidden mt-4 flex gap-2">
+                <input id="commentInput_${post.id}" type="text" placeholder="Apna comment likhiye..." 
+                       class="flex-1 border border-gray-300 rounded-2xl px-4 py-2">
+                <button onclick="addComment(${post.id})" class="bg-green-600 text-white px-6 rounded-2xl">Send</button>
+            </div>
+        </div>`;
+        container.innerHTML += html;
+    });
+}
+
+// Toggle Like
+async function toggleLike(postId) {
+    await fetch(`/api/community/like/${postId}`, { method: 'POST' });
+    loadPosts(); // refresh
+}
+
+// Show comment box
+function showCommentBox(postId) {
+    document.getElementById(`commentBox_${postId}`).classList.toggle('hidden');
+}
+
+// Add Comment
+async function addComment(postId) {
+    const input = document.getElementById(`commentInput_${postId}`);
+    const text = input.value.trim();
+    if (!text) return;
+
+    await fetch(`/api/community/comment/${postId}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({text: text})
+    });
+    input.value = '';
+    loadPosts();
+}
+
+// Create New Post
+async function createPost() {
+    const formData = new FormData();
+    formData.append('title', document.getElementById('postTitle').value);
+    formData.append('problem', document.getElementById('postProblem').value);
+
+    const fileInput = document.getElementById('postImage');
+    if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+    const res = await fetch('/api/community/post', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.message) {
+        alert('Post successfully created!');
+        loadPosts();
+        // clear form
+        document.getElementById('postTitle').value = '';
+        document.getElementById('postProblem').value = '';
+        document.getElementById('postImage').value = '';
+    } else {
+        alert('Error: ' + (data.error || 'Something went wrong'));
+    }
+}
+
+// Load posts on page load
+document.addEventListener('DOMContentLoaded', loadPosts);
+</script>
+{% endblock %}

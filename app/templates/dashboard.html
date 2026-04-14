@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-4">
+    <h2 class="text-xl font-semibold mb-4">Welcome back, {{ user.name }}! 🌾</h2>
+    
+    <!-- 10-Day Weather -->
+    <div class="bg-white rounded-3xl shadow p-4 mb-6">
+        <h3 class="font-medium mb-3">Agle 10 Din ka Mausam</h3>
+        <div class="grid grid-cols-5 gap-3 text-center">
+            {% for day in weather %}
+            <div>
+                <p class="text-xs text-gray-500">{{ day.date }}</p>
+                <img src="{{ day.icon }}" class="mx-auto w-8 h-8">
+                <p class="text-lg font-semibold">{{ day.temp }}°C</p>
+                <p class="text-xs">{{ day.condition }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Quick Buttons -->
+    <div class="grid grid-cols-2 gap-4">
+        <a href="/analysis" class="bg-white p-6 rounded-3xl shadow text-center hover:bg-green-50">
+            <div class="text-5xl mb-3">📸</div>
+            <h4 class="font-semibold">Crop Analysis</h4>
+            <p class="text-sm text-gray-500">Photo upload karke bimari pata karein</p>
+        </a>
+        <a href="/chat" class="bg-white p-6 rounded-3xl shadow text-center hover:bg-green-50">
+            <div class="text-5xl mb-3">💬</div>
+            <h4 class="font-semibold">AI Chat</h4>
+            <p class="text-sm text-gray-500">Kisi bhi sawal ka jawab</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

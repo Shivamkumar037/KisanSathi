@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-4">
+    <h2 class="text-2xl font-bold mb-6">Government Schemes</h2>
+    <div id="schemesList" class="space-y-4"></div>
+</div>
+<script>
+fetch('/api/schemes').then(r => r.json()).then(data => {
+    const list = document.getElementById('schemesList');
+    data.schemes.forEach(s => {
+        list.innerHTML += `<div class="bg-white p-5 rounded-3xl shadow flex justify-between"><div><h4 class="font-semibold">${s.name}</h4><p class="text-sm">${s.desc}</p></div><a href="${s.link}" target="_blank" class="bg-green-600 text-white px-6 py-2 rounded-2xl text-sm">Learn More</a></div>`;
+    });
+});
+</script>
+{% endblock %}

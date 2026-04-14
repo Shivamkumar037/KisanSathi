@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-6 text-center">
+    <div onclick="startVoice()" class="bg-green-100 rounded-full w-40 h-40 mx-auto flex items-center justify-center mb-8 shadow-inner cursor-pointer">
+        <i class="fas fa-microphone text-green-600 text-8xl"></i>
+    </div>
+    <h2 class="text-2xl font-bold mb-2">Voice Mode</h2>
+    <p id="status" class="text-green-600 font-medium">Mic dabao aur boliye</p>
+    <div id="response" class="mt-8 bg-white rounded-3xl p-6 text-left min-h-[200px] shadow">
+       <p style="color:#7c2d12; background:#ffedd5; padding:12px; border-radius:10px; text-align:center; font-weight:500;">
+⚠️ API response limit expire ho gayi hai. 
+Free tier khatm ho gaya hai, isliye abhi service temporarily available nahi hai.
+Kripya baad me dubara try karein.
+</p>
+    </div>
+</div>
+
+<script>
+window.startVoice = function() {
+    const status = document.getElementById('status');
+    status.innerHTML = '🎤 <span class="text-red-500">Listening...</span> Boliye';
+
+    // AI pehle greeting bolegi
+    const greeting = "Namaste! Main KrishiVani hoon. Aapki kya help kar sakti hoon?";
+    const utterance = new SpeechSynthesisUtterance(greeting);
+    utterance.lang = 'hi-IN';
+    speechSynthesis.speak(utterance);
+
+    // Greeting ke baad mic start
+    setTimeout(() => {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'hi-IN';
+
+        recognition.onresult = async (event) => {
+            const text = event.results[0][0].transcript;
+            status.textContent = 'You said: ' + text;
+
+            const res = await fetch('/api/chat/message', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: text})
+            });
+            const data = await res.json();
+
+            const respDiv = document.getElementById('response');
+            respDiv.innerHTML = `<p class="text-green-700">${data.response}</p>`;
+
+            const reply = new SpeechSynthesisUtterance(data.response);
+            reply.lang = 'hi-IN';
+            speechSynthesis.speak(reply);
+        };
+
+        recognition.start();
+    }, 1800); // greeting ke baad 1.8 second baad mic on
+};
+</script>
+{% endblock %}

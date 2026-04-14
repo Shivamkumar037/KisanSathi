@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-4">
+    <h2 class="text-2xl font-bold text-center mb-6">Crop Analysis 📸</h2>
+    <div class="border-2 border-dashed border-green-400 rounded-3xl p-8 text-center">
+        <input type="file" id="cropImage" accept="image/*" class="hidden">
+        <button onclick="document.getElementById('cropImage').click()" class="bg-green-500 text-white px-8 py-4 rounded-2xl text-lg font-medium">
+            📸 Take or Upload Photo
+        </button>
+    </div>
+    <div id="result" class="hidden mt-6 bg-white rounded-3xl p-6 shadow"></div>
+</div>
+
+<script>
+document.getElementById('cropImage').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+        const res = await fetch('/api/analysis/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+
+        const div = document.getElementById('result');
+        div.classList.remove('hidden');
+        div.innerHTML = data.success 
+            ? `<h3 class="font-semibold">Crop: ${data.plant}</h3><p class="mt-4">${data.ai_response}</p>`
+            : `<p class="text-red-600">${data.error || 'Failed'}</p>`;
+    } catch(err) {
+        alert('Error: ' + err.message);
+    }
+});
+</script>
+{% endblock %}
